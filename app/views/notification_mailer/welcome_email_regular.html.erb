@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>Dear <%= @user.full_name %>,</p>
+    <p><strong>Thank you for registering with ApexAdmissions.com!</strong> You will now have full access to our Marketplace, and are eligible to sign up for the services our mentors offer.</p>
+    <p>If you have any questions or concerns regarding our services, please feel free to contact the Apex Team at <%= mail_to "info.apexadmissions@gmail.com" %>, or refer to the FAQ section on our website. Our Terms of Use and Refund Policy information can be found on our website, as well.</p>
+    <p>We wish you the best of luck with all of your academic pursuits and hope that you are satisfied with our services. And thank you, once again, for choosing ApexAdmissions.com.</p>
+    <p>Sincerely,</p>
+    <p>ApexAdmissions.com Executive Team</p>
+    
+    <p>
+      <%= link_to "Find a Mentor Now!", root_url %>
+    </p>
+  </body>
+</html>

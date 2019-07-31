@@ -1,0 +1,12 @@
+development:
+  bucket: apexadmissions_development
+  access_key_id: AKIAJXHBB5NZM6KKEY6Q
+  secret_access_key: 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
+test:
+  bucket: 
+  access_key_id: 
+  secret_access_key: 
+production:
+  bucket: apexadmissions_production
+  access_key_id: AKIAJXHBB5NZM6KKEY6Q
+  secret_access_key: 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

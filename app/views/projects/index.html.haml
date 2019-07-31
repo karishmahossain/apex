@@ -1,0 +1,135 @@
+- flash_messages
+
+- if current_user.is_pending?
+  .notice
+    %h3 Your application has been submitted successfully!
+    %br/
+    Your status will remain as 
+    %strong pending 
+    until our hiring team approves your application. You will be
+    notified of your acceptance via e-mail within 5-7 business days.
+    After you have been approved, you will have full access to your dashboard 
+    and will appear in our mentor marketplace.
+
+- if current_user.is_mentor?
+  %h2 Mentor Dashboard
+  
+  - if @feeds.any?
+    %section#news-feed
+      - @feeds.each do |feed|
+        %article
+          %p
+            %span= feed.created_at.strftime('%m/%d/%Y')
+            = " - #{feed.content}".html_safe
+
+  - unless current_user.is_pending?
+
+    %section#my-services-list
+
+      - if current_user.is_mentor?
+        = form_for current_user, :url => mentor_path(current_user), :html => {:id => "mentor_status_form", :method => "put"} do |f|
+          = f.label :mentor_status, "I am "
+          = f.select :mentor_status, [ User::MENTOR_STATUS_OPTIONS[1], User::MENTOR_STATUS_OPTIONS[2] ]
+          %strong to accept new projects.
+          = f.submit "Confirm Change", :id => "update_mentor_status_button"
+      
+        %header
+          %h3= "Project Queue (#{@projects.count})"
+  
+  
+        - unless @projects.empty?
+          %table
+            %thead
+              %tr
+                %th Student
+                %th Service
+                %th Files Attached
+                %th Status
+            %tbody
+              - @projects.each do |project|
+                %tr
+                  %td= link_to project.user.full_name, project_path(project)
+                  %td= link_to project.project_type.name,  mentor_project_type_path(project.mentor, project.project_type)
+                  %td
+                    - project.documents.each do |doc|
+                      = link_to "PDF", "#{doc.file}", :target => "_blank"
+                  %td
+                    = form_for project do |f|
+                      = f.select :status, project.project_status 
+          :javascript
+            $(document).ready(function(){
+              $(".edit_project select").change(function(){
+                $(this).parent().submit();
+              });
+            });
+
+    
+          = paginate @projects
+  
+        - else
+          .info
+            Your queue is currently empty.  
+    
+    
+        %hr/
+
+        %header
+          %h3= "Services I'm Offering (#{current_user.is_available? ? current_user.project_types.length : 0})"
+      
+          - if current_user.project_types.any? && current_user.is_available?
+            %table
+              %thead
+                %tr
+                  %th Name
+                  %th Description
+                  %th Price
+              %tbody
+              - current_user.project_types.each do |service|
+                %tr
+                  %th= service.name
+                  %th= service.description
+                  %th= currency(service.price)
+      
+          - elsif current_user.is_unavailable?
+            .info 
+              You are not accepting projects from students at this moment. 
+              Change your status to available if you would like to continue accepting projects.
+      
+          - else
+            .info 
+              You are not offering any services yet.
+            
+
+                  
+   
+        
+- else
+  
+  %header
+    %h3= "My Services (#{@projects.count})"
+  - unless @projects.empty?
+  
+    %table
+      %thead
+        %tr
+          %th Mentor
+          %th Service
+          %th Files Attached
+          %th Status
+
+      %tbody
+        - @projects.each do |project|
+          %tr
+            %td= link_to project.mentor.full_name, mentor_project_types_path(project.mentor)
+            %td= link_to project.project_type.name,  mentor_project_type_path(project.mentor, project.project_type)
+            %td
+              - project.documents.each do |doc|
+                = link_to "PDF", "#{doc.file}", :target => "_blank"
+            %td= project.status
+  
+    = paginate @projects
+
+  - else
+    .info
+      You have not purchase any service yet. Start by 
+      = link_to "finding a mentor.", mentors_path

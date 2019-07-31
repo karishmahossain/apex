@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>Dear <%= @user.full_name %>,</p>
+    <p><strong>Thank you for submitting your application to be an Apex Mentor!</strong> The Apex Team will go over your application and notify you of your acceptance into the program via e-mail within 5-7 business days. Until then, your registration status will remain as pending.</p>
+    <p>If you have any questions or concerns regarding ApexAdmissions.com or your application, please feel free to contact the Apex Team at <%= mail_to "info.apexadmissions@gmail.com" %>. Terms of Use and FAQ information can be found on our website, as well.</p>
+    <p>Sincerely,</p>
+    <p>ApexAdmissions.com Executive Team</p>
+
+    <p>
+      <%= link_to "Visit your mentor Dashboard", projects_url %>
+    </p>
+  </body>
+</html>

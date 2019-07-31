@@ -1,0 +1,114 @@
+<% unless params[:type] == "mentor" %>
+  
+  <section id="sign-up-main">
+    <%= semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+      
+      <%= f.inputs :name => "Sign up for a student account" do %>
+        
+        <%= f.input :first_name %>
+        <%= f.input :last_name %>
+        <%= f.input :email %>
+        <%= f.input :password %>
+        <%= f.input :password_confirmation, :required => true %>
+        <%= f.input :phone_number, :required => true, :hint => "Without dashes or spaces" %>
+        <%= f.input :skype_id, :label => "Skype ID" %>
+        
+        <p>
+          <em>
+            By submitting this form, I agree to the ApexAdmissions.com 
+            <a href="http://apexadmissions.com/?page_id=559" target="_blank">Terms of Use</a>.
+          </em>
+          <br />
+          <%= f.submit "Register" %>          
+        </p>
+        
+      <% end %>
+    <% end %>
+  </section>
+  
+  <aside id="sign-up-info">
+    <h3>Why Choose ApexAdmissions.com?</h3>
+    <p>The college application process can be tedious and confusing. ApexAdmissions.com aims to connect you with college students all across the country in just three simple steps!</p>
+    <ol>
+      <li>Choose a Mentor</li>
+      <li>Select a Service</li>
+      <li>Pay for the service using PayPal</li>
+    </ol>
+    <p>After you have uploaded any required documents and paid for the service, you will be contacted by your Apex Mentor within 5-7 business days. If you have any questions, feel free to contact the Apex team at <%= mail_to "info.apexadmissions@gmail.com" %></p>
+  </aside>
+
+<% else %>
+
+  <section id="sign-up-main">
+    <%= semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name, :type => "mentor"), :html => {:multipart => true}) do |f| %>
+      <%= devise_error_messages! %>
+      
+      <%= f.inputs :name => "Become an Apex Mentor" do %>
+    
+        <%= f.input :first_name %>
+        <%= f.input :last_name %>
+        <%= f.input :email, :hint => "You must use your school's email address i.e. john@school<strong>.edu</strong>".html_safe %>
+        <%= f.input :password %>
+        <%= f.input :password_confirmation, :required => true %>
+        <%= f.input :photo, :required => true, :label => "Upload Your Picture", :hint => "Please upload a professional-looking image of yourself that will appear in our marketplace (PNG, JPG, GIF) Recommended resolution 175x300px" %>
+        <%= f.input :phone_number, :required => true, :hint => "Without dashes or spaces" %>
+        <%= f.input :skype_id, :label => "Skype ID" %>
+
+        <br />
+        <%= f.input :university_id, :label => "University Currently Attending", :as => :select, :collection => University.find(:all, :order => :name).map{|u| [u.name, u.id]}, :required => true %>
+        <p>--OR--</p>
+        <%= f.input :university_other, :label => "Other Universities" %>
+        <%= f.input :other_accepted_universities, :label => "Other Universities You Were Accepted To" %>
+        <%= f.input :gpa, :as => :string, :label => "College GPA", :hint => "Unweighted on a 4.0 scale" %>
+        <br />
+        <%= f.input :graduation, :order => [:month, :year], :label => "Anticipated College Graduation Date" %>
+
+        <%= f.input :bio, :required => true, :hint => "Please include a professional summary of your accomplishments and experiences (max 1000 characters)" %>
+        <%= f.input :clubs, :hint => "Please list any any clubs and organizations you have been a part of, separated by commas.", :input_html => { :class => "smalltextbox" }, :label => "Clubs and Organizations", :required => true %>
+        <%= f.input :awards, :hint => "Please list any academic awards or honors you have received, separated by commas.", :input_html => { :class => "smalltextbox" }, :label => "Awards and Honors (if applicable)" %>
+        
+        <%= f.inputs :name => false do %>
+          <%= f.input :SAT_score, :label => "SAT Score", :required => true %>
+          <span style="float: left; clear: none; display: inline-block; width: auto; padding: 21px 34px 0 21px;">
+          -- OR --
+          </span>
+          <%= f.input :ACT_score, :label => "ACT Score" %>
+        <% end %>
+        
+        <%= f.input :GMAT_score, :label => "GMAT Score (if applicable)" %>
+        <%= f.input :LSAT_score, :label => "LSAT Score (if applicable)" %>
+        <%= f.input :MCAT_score, :label => "MCAT Score (if applicable)" %>
+        <%= f.input :GRE_score, :label => "GRE Score (if applicable)" %>
+        <%= f.input :major_list, :label => "Major(s)", :hint => "Please include any currently held degrees, if applicable. Use commas to separate multiple majors.", :required => true %>
+        <%= f.input :areas_of_expertise_list, :label => "Consulting Expertise", :hint => "Use commas to separate multiple areas. e.g. essay editing, resume editing, etc.", :required => true %>
+        <%= f.input :resume,:required => true, :hint => "PDF, DOC, DOCX, TXT - Less than 1MB" %>
+        <%= f.input :writing_sample,:required => true, :hint => "Please upload one of your own college essays or another sample of your own writing. PDF, DOC, DOCX, TXT - Less than 1MB" %>
+        <%= f.input :paypal_account, :label => "PayPal Account Information (Email)", :hint => "If you don't have a PayPal account, please sign up for one at <a href='http://paypal.com'>http://paypal.com</a> so we can pay you.".html_safe, :required => true %>
+        <%= f.input :is_mentor, :as => :hidden, :value => true %>
+        
+        <%= f.input :project_types, :as => :check_boxes, :label => "Services you would like to offer" %>
+
+        <p>
+          <em>
+            By submitting this form, I agree to the ApexAdmissions.com 
+            <a href="http://apexadmissions.com/?page_id=559" target="_blank">Terms of Use</a>.
+          </em>
+          <br />
+          <%= f.submit "Submit Mentor Application" %>          
+        </p>
+      <% end %>
+    <% end %>
+  
+  </section>
+  
+  <aside id="sign-up-info">
+    <h3>Sign up now to become an Apex Mentor!</h3>
+    <p>By simply filling out these few forms, you can register to become a College Admissions Mentor for aspiring college applicants. You will have the opportunity to offer application advice, edit application essays and resumes, and answer questions via phone, Skype, or email, all while getting paid for your time!</p>
+    <p>The best part is that you can choose the packages you offer and when you work, so that you can earn money on your own time. Midterm season coming up? Too busy to help high school students? No worries, you can temporarily remove yourself from our marketplace with the click of a single button. Then jump back in when you're ready to take on new clients.</p>
+    <p><strong>Registration is absolutely free and takes only five minutes! Just give it a try!</strong></p>
+    <p>If you have any questions or concerns, email us at <%= mail_to "info.apexadmissions@gmail.com" %>.</p>
+  </aside>
+  
+
+<% end %>

@@ -1,0 +1,35 @@
+%h2 User Information
+
+%h3= @project.user.full_name
+
+%p
+  %strong Email:
+  = @project.user.email
+  
+  %br/
+  
+  %strong Phone:
+  = @project.user.phone_number
+  
+  %br/
+  
+  %strong Skype:
+  = @project.user.skype_id
+  
+%hr/
+
+%h2 Project Information
+
+%p
+  = @project.project_type.description
+
+%p
+  %strong Documents Attached
+  
+  - @project.documents.each do |doc|
+    = link_to "PDF", "#{doc.file}", :target => "_blank"
+
+= form_for @project do |f|
+  = f.label :status
+  = f.select :status, @project.project_status
+  = f.submit "Update Status"

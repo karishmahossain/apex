@@ -1,0 +1,110 @@
+%header#step-definition
+  %h2 Step 2. Select a Service
+
+%nav#breadcrumbs= breadcrumbs("Find a Mentor" => "/", @mentor.full_name => nil)
+
+- flash_messages
+  
+%aside#mentor-info
+
+  = image_tag @mentor.photo(:medium), :title => @mentor.full_name
+  
+  %h3.mentor-name= @mentor.full_name.titleize
+  
+  - unless @mentor.university_selected.nil?
+    %span.mentor-university
+      %strong School:
+      = @mentor.university_selected
+  
+  - unless @mentor.majors.empty?
+    %span.mentor-majors
+      %strong Major(s):
+      = @mentor.majors.join(", ").titleize
+  
+  - unless @mentor.areas_of_expertise.empty?
+    %span.mentor-areas-of-expertise
+      %strong Consulting Expertise:
+      = @mentor.areas_of_expertise.join(", ")
+  
+  %h3.section Personal Information
+  %strong Bio:
+  %br/
+  %span.mentor-bio= @mentor.bio
+  
+  - unless @mentor.clubs.blank?
+    %strong Clubs and Organizations:
+    %br/
+    %span.mentor-clubs= @mentor.clubs
+  
+  - unless @mentor.awards.blank?
+    %strong Awards and Honors:
+    %br/
+    %span.mentor-awards= @mentor.awards
+  
+  %h3.section Education
+  - unless @mentor.university_selected.nil?
+    %span.mentor-university
+      %strong School:
+      = @mentor.university_selected
+
+    - unless @mentor.majors.empty?
+      %span.mentor-majors
+        %strong Major(s):
+        = @mentor.majors.join(", ")
+    
+    
+    - unless @mentor.graduation.nil?
+      %span.mentor-majors
+        %strong Graduation Date:
+        = @mentor.graduation.strftime('%B - %Y')
+    
+    %span.mentor-majors
+      %strong Standardized test scores:
+      %br/
+      
+      SAT Score:
+      = @mentor.SAT_score
+      
+      - unless @mentor.ACT_score.nil?
+        %br/
+        ACT Score:
+        = @mentor.ACT_score
+      
+      - unless @mentor.GMAT_score.nil?
+        %br/
+        GMAT Score:
+        = @mentor.GMAT_score
+      
+      - unless @mentor.LSAT_score.nil?
+        %br/
+        LSAT Score:
+        = @mentor.LSAT_score
+        
+      - unless @mentor.MCAT_score.nil?
+        %br/
+        MCAT Score:
+        = @mentor.MCAT_score
+      
+      - unless @mentor.GRE_score.nil?
+        %br/
+        GRE Score:
+        = @mentor.GRE_score
+      
+  
+      
+
+    %span.mentor-majors
+      %strong Other universities accepted to:
+      %br/
+      = @mentor.other_accepted_universities
+
+
+%section#mentor-services-list
+  %header
+    %h3 Available Services
+  - unless @project_types.empty?
+    = render :partial => "project_type", :collection => @project_types, :locals => {:mentor => @mentor}
+    = paginate @project_types
+  
+  - else
+    .info We are sorry but this mentor is not offering any services at this moment.

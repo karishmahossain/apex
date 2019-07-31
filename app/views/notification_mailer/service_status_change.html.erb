@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>Dear <%= @service.user.full_name %>,</p>
+    <p><strong>The status of your project has been changed to <%= @service.status %>.</strong> You can see this status change by logging into your dashboard.</p>
+    <p>If you have any questions or concerns regarding ApexAdmissions.com or your application, please feel free to contact the Apex Team at <%= mail_to "info.apexadmissions@gmail.com" %>. Terms of Use and FAQ information can be found on our website, as well.</p>
+    <p>Sincerely,</p>
+    <p>ApexAdmissions.com Executive Team</p>
+
+    <p>
+      <%= link_to "Visit your Dashboard", projects_url %>
+    </p>
+  </body>
+</html>

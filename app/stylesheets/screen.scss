@@ -1,0 +1,545 @@
+// This import applies a global reset to any page that imports this stylesheet.
+@import "blueprint/reset";
+
+// To configure blueprint, edit the partials/base.sass file.
+@import "partials/base";
+
+@import "compass/css3";
+
+// Import all the default blueprint modules so that we can access their mixins.
+@import "blueprint";
+
+// Import the non-default scaffolding module.
+@import "blueprint/scaffolding";
+
+
+// Variables
+// FONTS
+$font-size-l: 17px;
+$font-size-m: 13px;
+$font-size-s: 11px;
+
+$font-bold: 700;
+
+// COLORS
+$green: green;
+$red: #FB292D;
+
+
+// To generate css equivalent to the blueprint css but with your
+// configuration applied, uncomment:
+// @include blueprint
+
+// If you are doing a lot of stylesheet concatenation, it is suggested
+// that you scope your blueprint styles, so that you can better control
+// what pages use blueprint when stylesheets are concatenated together.
+body {
+  @include blueprint-typography(true);
+  @include blueprint-utilities;
+  @include blueprint-debug;
+  @include blueprint-interaction;
+  // Remove the scaffolding when you're ready to start doing visual design.
+  // Or leave it in if you're happy with how blueprint looks out-of-the-box
+  background: url("http://apexadmissions.com/wp-content/themes/themes/css/theme.apex/center.bg.jpg") repeat-x 0 -365px;
+  
+}
+
+// Webkit resets
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+h1, h2, h3, h4 {
+  font-family: Myriad Pro, Trebuchet MS, Arial, Sans-Serif;
+}
+
+body .feedback, body .error, body .alert, body .notice, body .success, body .info {
+  padding: 0.8em;
+  margin-bottom: 1em;
+  border: 2px solid #DDD;
+  width: 94%;
+  font-size: 13px;
+  p { margin: 0;}
+  h2, h3 { margin: 0; }
+}
+
+hr {
+  border-top: 1px solid #CCC;
+  border-bottom: 0 none;
+  border-left: 0 none;
+  border-right: 0 none;
+  margin-bottom: 23px;
+}
+
+
+
+// Page layout can be done using mixins applied to your semantic classes and IDs:
+#container, .wrapper {
+  @include container;
+  clear: both;
+}
+
+#container {
+  border: 1px solid #ddd;
+  box-shadow: 0 0 5px #eee;
+  background-color: #fff;
+  padding-bottom: 23px;
+}
+
+#main-header {
+  float: left;
+  clear: both;
+  width: 100%;
+  .wrapper {
+    
+  }
+}
+
+#content {
+  @include column(23, true); 
+}
+#content {
+  margin-left: 33px;
+}
+
+#main-header {
+  background: url("http://apexadmissions.com/wp-content/themes/themes/css/img/top.bg.png") repeat-x;
+  color: #fff;
+  a {
+    color: #fff;
+  }
+}
+
+#mentor-registration-button, .button {
+  background-color: $red;
+  color: #fff;
+  padding: 9px 13px;
+  margin: 0 13px 0 0;
+  text-decoration: none;
+  @include text-shadow(#222 0 1px 0);
+  @include border-radius(5px);
+}
+
+#main-nav {
+  @include column(23, last);
+  text-align: right;
+  
+  a {
+    padding: 13px 7px;
+    display: inline-block;
+  }
+  
+}
+
+// FIND MENTOR LIST PAGE
+
+#filter_by {
+  @include column(23, true);
+  margin: 7px 0 32px;
+  
+  form {
+    background-color: #eee;
+    padding: 4px;
+    width: 47.7%;
+    float: left;
+    clear: none;
+    margin-right: 1%;
+    
+    select {
+      width: 100%;
+    }
+  }
+  
+  form:last-child {
+    margin-right: 0;
+  }
+}
+
+#mentors-list {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 892px;
+  
+  .info {
+    clear: both;
+  }
+}
+
+
+#main-header {
+  padding: 0 0 7px;
+  #logo {
+    float: left;
+    clear: none;
+    width: auto;
+  }
+  #login-links {
+    float: right;
+    width: auto;
+    margin: 30px 0 0;
+  }
+}
+
+#step-definition {
+//  @include info;
+  h2 {
+    margin-bottom: 9px;
+    color: #666;
+  }
+}
+
+.mentor-item {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 215px;
+  height: 250px;
+  margin-bottom: 33px;
+}
+
+.mentor-name {
+  font-size: $font-size-m;
+  margin: 4px 0 3px;
+  font-weight: $font-bold;
+}
+
+.mentor-majors, .mentor-areas-of-expertise, .mentor-university, .mentor-bio, .mentor-clubs, .mentor-awards {
+  display: block;
+  line-height: 1.6;
+  font-size: $font-size-s;
+}
+.mentor-bio {
+  font-size: 11px;
+  display: block;
+}
+
+.pagination {
+  display: block;
+  clear: both;
+  text-align: center;
+  font-size: $font-size-m;
+  padding: 4px 0;
+  background-color: #eee;
+  @include text-shadow(#fff 0 1px 0);
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .page, .next, .previous, .last, .first {
+    padding: 0 9px;
+  }
+  
+  .current {
+    font-weight: $font-bold;
+  }
+}
+
+#breadcrumbs {
+  margin-bottom: 19px;
+  background-color: #F6F6F6;
+  padding: 9px;
+  width: 95%;
+  border-radius: 8px;
+  border-bottom: 1px solid #EEE;
+}
+
+// Mentor Page
+#news-feed {
+  margin: 10px 0 23px;
+  
+
+  article {
+    width: 96.5%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: #eee;
+    border: 1px solid #ccc;
+
+    p { 
+      margin-bottom: 0;
+      span { font-style: italic; }
+    }
+  }
+}
+#mentor-info {
+  @include column(5);
+  
+  h3.section {
+    margin: 26px 0 9px;
+    font-size: 16px;
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 4px;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: #999;
+  }
+}
+
+#mentor-services-list {
+  @include column(18, true);
+}
+
+.service-item {
+  display: inline;
+  float: left;
+  margin-right: 50px;
+  width: 200px;
+  padding: 0 0 23px;
+}
+
+.project-type-name {
+  margin-bottom: 4px;
+  font-weight: $font-bold;
+  font-size: $font-size-m;
+}
+
+.project-type-deal {
+  float: left;
+  clear: none;
+  margin-right: 4px;
+  color: $green;
+  font-style: italic;
+  font-weight: $font-bold;
+}
+
+.project-type-description {
+  display: block;
+  font-size: $font-size-s;
+}
+
+.project-type-price {
+  display: block;
+  font-size: $font-size-m;
+  font-weight: $font-bold;
+}
+
+// PROJECT PAGE
+
+#service-details {
+  @include column(12);
+}
+
+#new_project {
+  
+  @include column(23, true);
+  
+  h4 {
+    margin-bottom: 7px;
+    text-transform: capitalize;
+  }
+  
+  input[type=file] {
+    float: left;
+    clear: both;
+    width: auto;
+    margin-bottom: 5px;
+    padding: 7px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+  }
+  input[name=submit] {
+    clear: both;
+    float: left;
+    width: auto;
+    margin-top: 7px;
+  }
+  
+  #project-type-price {
+    display: inline-block;
+    float: left;
+    clear: none;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 2px 0 0 9px;
+    font-family: Georgia, serif;
+    font-style: italic;
+  }
+  
+}
+
+// REGISTRATION
+
+#sign-up-main {
+  @include column(13);
+}
+
+#sign-up-info {
+  @include column(8, last);
+  display: inline;
+  float: left;
+  margin-right: 0;
+  padding: 27px;
+  margin-top: 19px;
+  background: #F6F6F6;
+  border-radius: 7px;
+}
+
+// ACCOUNT PAGE
+form#user_edit {
+  margin-bottom: 37px;
+}
+#mentor_status_form {
+  margin-bottom: 13px;
+}
+#mentor_status_form label, #user_mentor_status, #mentor_status_form strong {
+  margin-bottom: 13px;
+    font-size: 16px !important;
+    font-weight: normal;
+
+}
+
+// MY SERVICES
+
+#my-services-list {
+  @include column(23, true);
+}
+
+// FOOTER
+footer {
+  margin-top: 20px;
+  padding: 4em 0;
+  background-color: #171717;
+  color: #888;
+  border-top: solid 1px black;
+  font-family: Trebuchet MS, Arial, Sans-Serif;
+  font-size: 12px;
+  line-height: 1.66em;
+
+  a {
+    color: #888;
+  }
+}
+
+// FORMS
+ 
+form {
+  @include blueprint-form;
+  // You'll probably want to remove the scaffolding once you start styling your site.
+  @include blueprint-scaffolding; }
+  
+input[type=tel], input[type=text], input[type=email], input[type=password], input[type=search], input[type=number] {
+  width: 300px;
+  background-color: white;
+  border: 1px solid #BBB;
+  margin: 0.5em 0;
+  padding: 9px !important;
+}
+
+#user_SAT_score_input, #user_ACT_score_input, #user_GMAT_score_input, #user_MCAT_score_input,
+#user_GRE_score_input, #user_LSAT_score_input {
+  input {
+    width: 25px !important;
+  }
+}
+
+#user_SAT_score_input, #user_ACT_score_input {
+  float: left;
+  clear: none;
+}
+
+
+.smalltextbox { height: 100px; }
+  
+input[type=file] {
+  margin: 4px 0 7px;
+}
+
+fieldset {
+  border: 0 none !important;
+  padding: 0 !important;
+  fieldset {
+    margin: 0;
+  }
+}
+
+
+.hidden { display: none; }
+
+legend {
+  font-size: 1em !important;
+  margin-bottom: 13px;
+  font-weight: 400 !important;
+  border-bottom: 1px solid #EEE;
+  display: block;
+  width: 90%;
+  color: #666;
+  text-transform: uppercase;
+  clear: both;
+  float: left;
+  padding-bottom: 8px;
+}
+
+fieldset.choices {
+  padding: 0;
+  
+  .label label {
+    font-size: 13px;
+    padding-bottom: 4px;
+  }
+  
+  .choices-group li {
+    padding: 4px 8px;
+    margin: 4px 3px 3px 0;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+}
+
+.inputs {
+  ol {
+    margin: 7px 0 0;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+    list-style-type: none;
+    margin-bottom: 7px;
+    width: 90%;
+    
+    li {
+      width: auto;
+    }
+    label {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.inline-hints {
+  clear: both;
+}
+
+input[type=submit] {
+  padding: 11px 43px;
+  //display: inline-block;
+  font-size: 16px;
+  border: none; 
+  background: #fb292d;
+  color: white;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -khtml-border-radius: 7px;
+  border-radius: 7px;
+  text-shadow: #222 0 1px 0;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+#update_mentor_status_button {
+  padding: 4px 9px 5px;
+  font-size: 11px;
+  background-color: #666;
+  margin-left: 7px;
+}
+
+
+
+
+

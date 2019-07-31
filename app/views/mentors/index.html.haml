@@ -1,0 +1,52 @@
+%section#mentors-list.listing
+  %header#step-definition
+    %h2 Step 1. Choose a Mentor
+  
+  %nav#filter_by
+    %form{ :action => mentors_path(@filter_params), :method => "get" }
+      %select{ :name => "by_school", :id => "by_university" }
+        %option{ :id => "school_0", :value => ""} View All Schools
+        - @universities.each do |school|
+          %option{ :id => "school_#{school.id}", :value => school.id, :selected => params[:by_school] == school.id.to_s ? true : false }= school.name
+    
+    %form{ :action => mentors_path(@filter_params), :method => "get" }
+      %select{ :name => "by_major", :id => "by_major" }
+        %option{ :id => "major_0", :value => ""} View All Majors
+        - @majors.each do |major|
+          %option{ :id => "major_#{major['id']}", :value => major['name'], :selected => params[:by_major] == major['name'].to_s ? true : false }= major['name']
+
+          
+  - unless @mentors.empty? 
+    - @mentors.each_with_index do |mentor,i|
+      %article.mentor-item{ :id => "mentor_#{mentor.id}", :style => ("margin-right: 0" if (i+1)%4 == 0)  }
+        = link_to image_tag(mentor.photo(:thumb), :title => mentor.full_name), mentor_project_types_path(mentor)
+      
+        %h3.mentor-name= link_to mentor.full_name, mentor_project_types_path(mentor).capitalize
+        
+        - unless mentor.university_selected.nil?
+          %span.mentor-university
+            %strong School:
+            = mentor.university_selected
+      
+        - unless mentor.majors.empty?
+          %span.mentor-majors
+            %strong= mentor.majors.length == 1 ? "Major:" : "Majors:"
+            = mentor.majors.join(", ")
+      
+        - unless mentor.areas_of_expertise.empty?
+          %span.mentor-areas-of-expertise
+            %strong Expertise:
+            = mentor.areas_of_expertise.join(", ")
+  - else
+    .info We are sorry but we could not find any mentor.
+          
+  
+  = paginate @mentors
+      
+      
+:javascript
+  $(document).ready(function(){
+    $('#filter_by select').change(function(){
+      $(this).parent().submit();
+    });
+  });

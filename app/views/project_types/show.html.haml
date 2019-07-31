@@ -1,0 +1,39 @@
+%header#step-definition
+  %h2 Step 3. Upload Documents and Pay For Service
+
+%nav#breadcrumbs= breadcrumbs("Search for Mentors" => "/", @mentor.full_name => mentor_project_types_path(@mentor), @project_type.name => nil)
+
+- flash_messages
+
+= semantic_form_for @project, :action => "create", :html => {:multipart => true} do |f|
+
+  %section#service-details
+    %header
+      %h3#project-type-name="#{@project_type.name} (#{currency(@project_type.price)})"
+  
+    %div#project-type-description= @project_type.description
+    = f.inputs :name => "Attach your documents", :style => "margin-bottom: -5px;" do
+      = f.semantic_fields_for :documents do |document|
+        = document.input :file, :label => false, :hint => "Less than 5MB. (PDF, DOC, DOCX, TXT)"
+      
+  %section#files
+
+    = f.inputs :name => "Purchase Service" do
+
+      = f.input :university, :collection => University.find(:all, :order => :name).map{|u| [u.name, u.id]}, :label => "University you are applying to"
+
+      = f.input :university_other, :label => "Other universities"
+
+      = f.input :essay_prompt, :label => "Essay prompt", :input_html => { :style => "height: 100px;" }
+    
+  
+  
+      = f.input :mentor_id, :as => :hidden, :value => @mentor.id
+      = f.input :project_type_id, :as => :hidden, :value => @project_type.id
+  
+
+    
+      %input{ :type => "image", :src => "http://www.paypal.com/en_US/i/btn/btn_buynow_LG.gif", :border => "0", :name => "submit", :alt => "Make payments with PayPal - it's fast, free and secure!"}
+  
+  
+      %div#project-type-price= currency(@project_type.price)

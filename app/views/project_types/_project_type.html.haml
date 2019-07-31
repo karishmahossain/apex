@@ -1,0 +1,10 @@
+%article.service-item{:id => "service-item-#{project_type.id}", :style => ("margin-right: 0" if (project_type_counter+1)%3 == 0) }
+  
+  - if project_type.deal?
+    %span.project-type-deal $$$
+    
+  %h4.project-type-name= link_to project_type.name, mentor_project_type_path(mentor, project_type)
+  
+  %span.project-type-description= project_type.description
+  
+  %span.project-type-price= currency(project_type.price)
